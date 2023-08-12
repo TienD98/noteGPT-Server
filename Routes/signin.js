@@ -44,6 +44,13 @@ signinRouter.post('/', (req, res) => {
         if (!bcrypt.compareSync(req.password, result.rows[0].password)) {
             return res.status(401).send('fail');
         }
+        req.session.authenticated = true;
+        req.session.user = {
+            username: req.username,
+            password: req.password,
+            hashedPassword: result.rows[0].password
+        }
+        console.log(req.session);
         return res.status(202).send('success');
     });
 

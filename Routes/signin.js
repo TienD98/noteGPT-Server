@@ -41,7 +41,6 @@ signinRouter.post('/', (req, res) => {
         }
 
         if (!bcrypt.compareSync(req.password, result.rows[0].password)) {
-            req.session.authenticated = false;
             return res.status(401).send('fail');
         }
         req.session.authenticated = true;
@@ -54,15 +53,5 @@ signinRouter.post('/', (req, res) => {
         return res.status(202).send('success');
     });
 });
-
-signinRouter.get('enter', (req, res) => {
-    console.log(req.session.authenticated);
-    if (req.session.authenticated) {
-        return next();
-    } else {
-        console.log(req.session.authenticated);
-        res.status(403).json({ msg: "You're not authorized to view this page" })
-    }
-})
 
 module.exports = signinRouter

@@ -4,11 +4,7 @@ const bcrypt = require("bcryptjs");
 const pool = require('../DB/db');
 const cors = require('cors');
 
-signinRouter.use(cors({
-    origin: ['http://localhost:5001'],
-    methods: ['GET', 'POST'],
-    credentials: true // enable set cookie
-}));
+signinRouter.use(cors());
 
 //check if username exist
 signinRouter.use((req, res, next) => {

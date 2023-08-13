@@ -4,8 +4,11 @@ const bcrypt = require("bcryptjs");
 const pool = require('../DB/db');
 const cors = require('cors');
 
-
-signinRouter.use(cors());
+signinRouter.use(cors({
+    origin: ['http://localhost:5001'],
+    methods: ['GET', 'POST'],
+    credentials: true // enable set cookie
+}));
 
 //check if username exist
 signinRouter.use((req, res, next) => {
@@ -20,9 +23,9 @@ signinRouter.use((req, res, next) => {
         }
 
         let userFound = false;
-        //error check for if username is exist
+        // error check for if username is exist
         for (const user of result.rows) {
-            //found user
+            // found user
             if (user.username === username) {
                 userFound = true;
                 req.username = username;
@@ -42,6 +45,7 @@ signinRouter.post('/', (req, res) => {
         }
 
         if (!bcrypt.compareSync(req.password, result.rows[0].password)) {
+            req.session.authenticated = false;
             return res.status(401).send('fail');
         }
         req.session.authenticated = true;
@@ -53,7 +57,6 @@ signinRouter.post('/', (req, res) => {
         console.log(req.session);
         return res.status(202).send('success');
     });
-
-})
+});
 
 module.exports = signinRouter

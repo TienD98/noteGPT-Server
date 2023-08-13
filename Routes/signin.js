@@ -55,4 +55,14 @@ signinRouter.post('/', (req, res) => {
     });
 });
 
+signinRouter.get('enter', (req, res) => {
+    console.log(req.session.authenticated);
+    if (req.session.authenticated) {
+        return next();
+    } else {
+        console.log(req.session.authenticated);
+        res.status(403).json({ msg: "You're not authorized to view this page" })
+    }
+})
+
 module.exports = signinRouter

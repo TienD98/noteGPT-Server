@@ -23,23 +23,7 @@ app.use(
         cookie: { SameSite: "None", httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: true }
     })
 );
-// const allowedOrigins = ['https://tiend98.github.io', 'http://localhost:3000'];
 
-// app.use(cors({
-//     origin: function (origin, callback) {
-//         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-//             callback(null, true);
-//         } else {
-//             callback(new Error('Not allowed by CORS'));
-//         }
-//     },
-//     credentials: true,
-// }));
-
-// app.use(cors({
-//     origin: 'https://tiend98.github.io',
-//     credentials: true,
-// }));
 app.use((req, res, next) => {
     res.set({
         "Access-Control-Allow-Origin": "https://tiend98.github.io",

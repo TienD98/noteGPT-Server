@@ -9,19 +9,31 @@ const signinRouter = require('./Routes/signin');
 const session = require("express-session");
 const welcomeRouter = require('./Routes/welcome');
 const store = new session.MemoryStore();
+const allowedOrigins = ['https://tiend98.github.io', 'http://localhost:3000'];
 
 app.use(cors({
-    origin: 'https://tiend98.github.io',
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
 }));
-app.use((req, res, next) => {
-    res.set({
-        "Access-Control-Allow-Origin": "https://tiend98.github.io",
-        "Access-Control-Allow-Methods": "*",
-        "Access-Control-Allow-Headers": "'Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token'",
-    });
-    next();
-});
+
+// app.use(cors({
+//     origin: 'https://tiend98.github.io',
+//     credentials: true,
+// }));
+// app.use((req, res, next) => {
+//     res.set({
+//         "Access-Control-Allow-Origin": "https://tiend98.github.io",
+//         "Access-Control-Allow-Methods": "*",
+//         "Access-Control-Allow-Headers": "'Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token'",
+//     });
+//     next();
+// });
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 // app.set('trust proxy', 1);

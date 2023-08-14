@@ -75,6 +75,10 @@ const corsOptions = {
     origin: "https://tiend98.github.io",
     credentials: true
 };
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    next();
+});
 
 app.use((req, res, next) => {
     console.log('CORS Pre-Flight:', req.headers.origin);

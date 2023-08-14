@@ -30,7 +30,7 @@ app.use(
         resave: false,
         saveUninitialized: true,
         MemoryStore,
-        cookie: { httpOnly: true, maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: true }
+        cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: "none" }
     })
 )
 

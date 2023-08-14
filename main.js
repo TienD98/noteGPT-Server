@@ -17,7 +17,7 @@ app.use(
         secret: 'ASD123!@#',
         resave: false,
         saveUninitialized: true,
-        store,
+        store: store,
         cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: "None" }
     })
 );

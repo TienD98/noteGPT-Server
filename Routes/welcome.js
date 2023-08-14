@@ -1,6 +1,6 @@
 const express = require('express');
 const welcomeRouter = express.Router();
-const cors = require('cors');
+// const cors = require('cors');/
 
 // welcomeRouter.use(cors());
 welcomeRouter.use((req, res, next) => {

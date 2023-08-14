@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const registerRouter = require('./Routes/register');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+// const cors = require('cors');
 const morgan = require('morgan');
 const signinRouter = require('./Routes/signin');
 const session = require("express-session");
@@ -29,6 +29,7 @@ const store = new session.MemoryStore();
 app.use((req, res, next) => {
     res.set({
         "Access-Control-Allow-Origin": "http://localhost:5173",
+        "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Methods": "*",
         "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
     });

@@ -2,7 +2,6 @@ const express = require('express');
 const signinRouter = express.Router();
 const bcrypt = require("bcryptjs");
 const pool = require('../DB/db');
-// const cors = require('cors');
 
 //check if username exist
 signinRouter.use((req, res, next) => {

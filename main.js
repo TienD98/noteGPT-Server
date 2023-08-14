@@ -15,7 +15,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 
 const corsOptions = {
-    origin: 'https://tiend98.github.io/',
+    origin: 'https://tiend98.github.io',
     methods: 'GET,POST,PUT,DELETE',
     credentials: true, // This allows cookies to be sent with the request
     optionsSuccessStatus: 204

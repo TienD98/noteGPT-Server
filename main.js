@@ -15,7 +15,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 
 const corsOptions = {
-    origin: 'https://tiend98.github.io/noteGPT',
+    origin: 'https://tiend98.github.io/',
     methods: 'GET,POST,PUT,DELETE',
     credentials: true, // This allows cookies to be sent with the request
     optionsSuccessStatus: 204
@@ -30,7 +30,7 @@ app.use(
         resave: false,
         saveUninitialized: true,
         MemoryStore,
-        cookie: { httpOnly: true, maxAge: 1000 * 60 * 60 * 24, secure: false, sameSite: true }
+        cookie: { httpOnly: true, maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: true }
     })
 )
 

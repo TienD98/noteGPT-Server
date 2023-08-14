@@ -10,14 +10,12 @@ const session = require("express-session");
 const welcomeRouter = require('./Routes/welcome');
 const store = new session.MemoryStore();
 
-app.use(morgan('dev'));
-app.use(bodyParser.json());
-
 app.use(cors({
     origin: 'https://tiend98.github.io',
     credentials: true,
 }));
-
+app.use(morgan('dev'));
+app.use(bodyParser.json());
 app.set('trust proxy', 1);
 app.use(
     session({

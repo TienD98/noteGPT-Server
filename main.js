@@ -72,7 +72,8 @@ const cookieParser = require('cookie-parser');
 const app = express();
 
 app.use(cors({
-    origin: "https://tiend98.github.io"
+    origin: "https://tiend98.github.io",
+    credentials: true
 }));
 app.use(cookieParser());
 

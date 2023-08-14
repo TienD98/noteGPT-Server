@@ -33,6 +33,10 @@ app.use((req, res, next) => {
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
         "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
     });
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
     next();
 });
 app.use(morgan('dev'));

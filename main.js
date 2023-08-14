@@ -94,6 +94,10 @@ app.get('/', (req, res) => {
     res.send(`You have visited this page ${req.session.visitCount} times.`);
 });
 
+app.get('/setcookie', (req, res) => {
+    res.cookie('test', 'value', { sameSite: 'none', secure: true });
+    res.send('Cookie set');
+});
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {

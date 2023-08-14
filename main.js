@@ -11,9 +11,9 @@ const session = require("express-session");
 const store = new session.MemoryStore();
 const cookieParser = require('cookie-parser');
 const corsOptions = {
-    origin: ["https://tiend98.github.io", "http://localhost:3000"],
+    origin: ["https://tiend98.github.io", "http://localhost:5173"],
     credentials: true,
-    allowedHeader: true
+    allowedHeaders: true,
 };
 
 app.use(cookieParser());

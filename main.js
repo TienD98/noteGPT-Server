@@ -20,7 +20,7 @@ app.use(
         resave: false,
         saveUninitialized: true,
         store,
-        cookie: { SameSite: "None", httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: true }
+        cookie: { sameSite: "None", httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: true }
     })
 );
 

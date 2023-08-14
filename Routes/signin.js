@@ -41,10 +41,7 @@ signinRouter.post('/', (req, res) => {
         if (!bcrypt.compareSync(req.password, result.rows[0].password)) {
             return res.status(401).send('fail');
         }
-        res.cookie('sessionID', req.sessionID, {
-            httpOnly: true, // Prevent JavaScript access to the cookie
-            maxAge: 1000 * 60 * 60 * 24 // Cookie expiration time (e.g., 1 day)
-        });
+
         req.session.authenticated = true;
         req.session.user = {
             username: req.username,

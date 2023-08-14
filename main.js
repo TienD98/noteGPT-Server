@@ -10,27 +10,36 @@ const session = require("express-session");
 const welcomeRouter = require('./Routes/welcome');
 // const store = new session.MemoryStore();
 const MemoryStore = require('session-memory-store')(session);
+const cookieParser = require('cookie-parser');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 const corsOptions = {
     origin: 'https://tiend98.github.io',
     methods: 'GET,POST,PUT,DELETE',
     credentials: true, // This allows cookies to be sent with the request
-    optionsSuccessStatus: 204
+    optionsSuccessStatus: 204,
 };
 
 app.use(cors(corsOptions));
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true'),
+        next();
+});
 
-// app.set('trust proxy', 1);
+app.set('trust proxy', 1);
 app.use(
     session({
         secret: 'ASD123!@#',
         resave: false,
         saveUninitialized: true,
         MemoryStore,
-        cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: "none" }
+        cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: 'none' }
     })
 )
 

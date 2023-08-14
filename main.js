@@ -93,7 +93,8 @@ app.use(session({
     saveUninitialized: true,
     cookie: {
         sameSite: 'none', // or 'strict', 'lax' as needed
-        secure: true
+        secure: true,
+        httpOnly: false
     }
 }));
 

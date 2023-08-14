@@ -9,7 +9,9 @@ const signinRouter = require('./Routes/signin');
 const welcomeRouter = require('./Routes/welcome');
 const session = require("express-session");
 const store = new session.MemoryStore();
+const cookieParser = require('cookie-parser');
 
+app.use(cookieParser());
 
 // signinRouter.use(cors());
 app.use(

@@ -12,12 +12,12 @@ const store = new session.MemoryStore();
 const cookieParser = require('cookie-parser');
 const corsOptions = {
     origin: "https://tiend98.github.io",
-    credentials: true,
+    credentials: true
 };
 
-app.enable('trust proxy');
 app.use(cookieParser());
 app.use(cors(corsOptions));
+app.enable('trust proxy');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
@@ -31,7 +31,7 @@ app.use(
             sameSite: "none",
             httpOnly: false,
             maxAge: 1000 * 60 * 60 * 24,
-            secure: false
+            secure: true
         }
     })
 );

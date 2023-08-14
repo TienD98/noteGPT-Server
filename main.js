@@ -13,14 +13,10 @@ const store = new session.MemoryStore();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
-const corsOptions = {
+app.use(cors({
     origin: 'https://tiend98.github.io',
-    methods: 'GET,POST,PUT,DELETE',
-    credentials: true, // This allows cookies to be sent with the request
-    optionsSuccessStatus: 204,
-};
-
-app.use(cors(corsOptions));
+    credentials: true,
+}));
 
 app.set('trust proxy', 1);
 app.use(
@@ -32,7 +28,6 @@ app.use(
         cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: "none" }
     })
 )
-
 
 app.get('/', (req, res) => {
     res.send('Hello, Wolrd!');

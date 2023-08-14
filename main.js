@@ -71,10 +71,16 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const app = express();
 
-app.use(cors({
+const corsOptions = {
     origin: "https://tiend98.github.io",
     credentials: true
-}));
+};
+
+app.use((req, res, next) => {
+    console.log('CORS Pre-Flight:', req.headers.origin);
+    next();
+}, cors(corsOptions));
+
 app.use(cookieParser());
 
 app.use(session({
@@ -91,11 +97,15 @@ app.get('/', (req, res) => {
     // Check if the session has a visit count, if not, set it to 1
     req.session.visitCount = req.session.visitCount ? req.session.visitCount + 1 : 1;
     console.log(req.session.visitCount);
+    console.log('Session:', req.session);
+
     res.send(`You have visited this page ${req.session.visitCount} times.`);
 });
 
 app.get('/setcookie', (req, res) => {
     res.cookie('test', 'value', { sameSite: 'none', secure: true });
+    console.log('Session:', req.session);
+
     res.send('Cookie set');
 });
 

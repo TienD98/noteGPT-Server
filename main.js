@@ -17,8 +17,8 @@ app.use(
         secret: 'ASD123!@#',
         resave: false,
         saveUninitialized: true,
-        store: store,
-        cookie: { maxAge: 1000 * 60 * 60 * 24 }
+        store,
+        cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24 }
     })
 );
 // const allowedOrigins = ['https://tiend98.github.io', 'http://localhost:3000'];

@@ -7,6 +7,20 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const signinRouter = require('./Routes/signin');
 const welcomeRouter = require('./Routes/welcome');
+const session = require("express-session");
+const store = new session.MemoryStore();
+
+
+// signinRouter.use(cors());
+app.use(
+    session({
+        secret: 'ASD123!@#',
+        resave: false,
+        saveUninitialized: true,
+        store,
+        cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: false, sameSite: "none" }
+    })
+);
 // const allowedOrigins = ['https://tiend98.github.io', 'http://localhost:3000'];
 
 // app.use(cors({

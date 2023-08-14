@@ -59,6 +59,7 @@ app.use('/register', registerRouter);
 app.use('/signin', signinRouter);
 
 function ensureAuthenticate(req, res, next) {
+    console.log(req.session);
     console.log(req.session.authenticated);
     if (req.session.authenticated) {
         return next();

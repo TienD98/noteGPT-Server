@@ -18,7 +18,7 @@ app.use(
         resave: false,
         saveUninitialized: true,
         store,
-        cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: false, sameSite: "none" }
+        cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: "None" }
     })
 );
 // const allowedOrigins = ['https://tiend98.github.io', 'http://localhost:3000'];
@@ -38,19 +38,19 @@ app.use(
 //     origin: 'https://tiend98.github.io',
 //     credentials: true,
 // }));
-app.use((req, res, next) => {
-    res.set({
-        "Access-Control-Allow-Origin": "http://localhost:5173",
-        "Access-Control-Allow-Credentials": true,
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-        "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
-    });
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
-    }
+// app.use((req, res, next) => {
+//     res.set({
+//         "Access-Control-Allow-Origin": "http://localhost:5173",
+//         "Access-Control-Allow-Credentials": true,
+//         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+//         "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
+//     });
+//     if (req.method === 'OPTIONS') {
+//         return res.status(200).end();
+//     }
 
-    next();
-});
+//     next();
+// });
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 // app.set('trust proxy', 1);

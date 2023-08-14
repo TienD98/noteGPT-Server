@@ -10,7 +10,7 @@ const session = require("express-session");
 const welcomeRouter = require('./Routes/welcome');
 const store = new session.MemoryStore();
 
-// app.set('trust proxy', 1);
+app.set('trust proxy', 1);
 app.use(
     session({
         secret: 'ASD123!@#',
@@ -26,7 +26,7 @@ app.use(cors());
 
 
 app.use((req, res, next) => {
-    const allowedOrigins = ['https://tiend98.github.io', 'http://localhost:3000'];
+    const allowedOrigins = ['https://tiend98.github.io', 'http://localhost:5173'];
     const origin = req.headers.origin;
 
     if (allowedOrigins.includes(origin)) {

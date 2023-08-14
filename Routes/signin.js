@@ -50,7 +50,7 @@ signinRouter.post('/', (req, res) => {
             hashedPassword: result.rows[0].password
         }
         console.log(req.session);
-        return res.status(202).send('success').json(req.session);
+        return res.status(202).send('success');
     });
 });
 

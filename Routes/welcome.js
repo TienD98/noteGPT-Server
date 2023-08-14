@@ -14,6 +14,8 @@ welcomeRouter.use((req, res, next) => {
 });
 
 welcomeRouter.get('/', (req, res) => {
+    console.log('hi1');
+    console.log(req.session);
     res.status(200).json(req.session.user);
 })
 

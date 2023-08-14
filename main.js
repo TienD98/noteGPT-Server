@@ -17,7 +17,7 @@ app.use(
         resave: false,
         saveUninitialized: true,
         store,
-        cookie: { maxAge: 1000 * 60 * 60 * 24, secure: false, sameSite: "none" }
+        cookie: { maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: 'none' }
     })
 )
 app.use(morgan('dev'));

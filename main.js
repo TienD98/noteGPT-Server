@@ -98,7 +98,7 @@ app.use(session({
     }
 }));
 
-app.get('/', (req, res) => {
+app.get('/noteGPT', (req, res) => {
     // Check if the session has a visit count, if not, set it to 1
     req.session.visitCount = req.session.visitCount ? req.session.visitCount + 1 : 1;
     console.log(req.session.visitCount);

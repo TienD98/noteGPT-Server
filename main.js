@@ -80,7 +80,11 @@ app.use(cookieParser());
 app.use(session({
     secret: 'your-secret-key',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        sameSite: 'none', // or 'strict', 'lax' as needed
+        secure: true
+    }
 }));
 
 app.get('/', (req, res) => {

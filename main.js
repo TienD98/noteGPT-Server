@@ -3,12 +3,14 @@ const express = require('express');
 const app = express();
 const registerRouter = require('./Routes/register');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+// const cors = require('cors');
 const morgan = require('morgan');
 const signinRouter = require('./Routes/signin');
 const session = require("express-session");
 const welcomeRouter = require('./Routes/welcome');
-const store = new session.MemoryStore();
+// const store = new session.MemoryStore();
+const MemoryStore = require('session-memory-store')(session);
+
 
 app.set('trust proxy', 1);
 app.use(
@@ -16,21 +18,21 @@ app.use(
         secret: 'ASD123!@#',
         resave: false,
         saveUninitialized: true,
-        store,
-        cookie: { maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: 'none' }
+        MemoryStore,
+        cookie: { httpOnly: true, maxAge: 1000 * 60 * 60 * 24, secure: false, sameSite: true }
     })
 )
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 // app.use(cors());
 
-const corsOptions = {
-    origin: ['https://tiend98.github.io', 'http://localhost:5173'],
-    credentials: true,
-    methods: 'GET, POST, PUT, DELETE',
-};
+// const corsOptions = {
+//     origin: ['https://tiend98.github.io', 'http://localhost:5173'],
+//     credentials: true,
+//     methods: 'GET, POST, PUT, DELETE',
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
     res.send('Hello, Wolrd!');

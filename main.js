@@ -86,7 +86,7 @@ app.use((req, res, next) => {
 }, cors(corsOptions));
 
 app.use(cookieParser());
-
+app.enable('trust proxy');
 app.use(session({
     secret: 'your-secret-key',
     resave: false,

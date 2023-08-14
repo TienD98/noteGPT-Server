@@ -6,9 +6,7 @@ const bodyParser = require('body-parser');
 // const cors = require('cors');
 const morgan = require('morgan');
 const signinRouter = require('./Routes/signin');
-const session = require("express-session");
 const welcomeRouter = require('./Routes/welcome');
-const store = new session.MemoryStore();
 // const allowedOrigins = ['https://tiend98.github.io', 'http://localhost:3000'];
 
 // app.use(cors({
@@ -42,15 +40,7 @@ app.use((req, res, next) => {
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 // app.set('trust proxy', 1);
-app.use(
-    session({
-        secret: 'ASD123!@#',
-        resave: false,
-        saveUninitialized: true,
-        store,
-        cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: false, sameSite: "none" }
-    })
-)
+
 
 app.get('/', (req, res) => {
     res.send('Hello, Wolrd!');

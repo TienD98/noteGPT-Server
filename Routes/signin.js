@@ -3,9 +3,20 @@ const signinRouter = express.Router();
 const bcrypt = require("bcryptjs");
 const pool = require('../DB/db');
 // const cors = require('cors');
+const session = require("express-session");
+const store = new session.MemoryStore();
+
 
 // signinRouter.use(cors());
-
+signinRouter.use(
+    session({
+        secret: 'ASD123!@#',
+        resave: false,
+        saveUninitialized: true,
+        store,
+        cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: false, sameSite: "none" }
+    })
+)
 //check if username exist
 signinRouter.use((req, res, next) => {
     const username = req.body.username;

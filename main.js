@@ -13,7 +13,7 @@ const cookieParser = require('cookie-parser');
 const corsOptions = {
     origin: ["https://tiend98.github.io", "http://localhost:5173"],
     credentials: true,
-    allowedHeaders: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cookieParser());

@@ -24,14 +24,14 @@ app.use((req, res, next) => {
 });
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 app.use(
     session({
         secret: 'ASD123!@#',
         resave: false,
         saveUninitialized: true,
         store,
-        cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: "none" }
+        cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: false, sameSite: "none" }
     })
 )
 

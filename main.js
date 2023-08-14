@@ -8,29 +8,19 @@ const morgan = require('morgan');
 const signinRouter = require('./Routes/signin');
 const session = require("express-session");
 const welcomeRouter = require('./Routes/welcome');
-// const store = new session.MemoryStore();
-const MemoryStore = require('session-memory-store')(session);
-const cookieParser = require('cookie-parser');
+const store = new session.MemoryStore();
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-app.use(cookieParser());
 
 const corsOptions = {
-    origin: 'https://tiend98.github.io/noteGPT/',
+    origin: 'https://tiend98.github.io/noteGPT',
     methods: 'GET,POST,PUT,DELETE',
     credentials: true, // This allows cookies to be sent with the request
     optionsSuccessStatus: 204,
 };
 
 app.use(cors(corsOptions));
-// app.use(function (req, res, next) {
-//     res.header('Access-Control-Allow-Credentials', true);
-//     res.header('Access-Control-Allow-Origin', 'https://tiend98.github.io');
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
-//     res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
-//     next();
-// });
 
 app.set('trust proxy', 1);
 app.use(
@@ -38,7 +28,7 @@ app.use(
         secret: 'ASD123!@#',
         resave: false,
         saveUninitialized: true,
-        MemoryStore,
+        store,
         cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: "none" }
     })
 )

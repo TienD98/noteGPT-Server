@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 const corsOptions = {
-    origin: 'https://tiend98.github.io',
+    origin: 'https://tiend98.github.io/noteGPT/',
     methods: 'GET,POST,PUT,DELETE',
     credentials: true, // This allows cookies to be sent with the request
     optionsSuccessStatus: 204,

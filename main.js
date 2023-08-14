@@ -72,7 +72,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 
 const corsOptions = {
-    origin: "https://tiend98.github.io",
+    origin: "https://tiend98.github.io/noteGPT",
     credentials: true
 };
 app.use((req, res, next) => {

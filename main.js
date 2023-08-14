@@ -18,7 +18,7 @@ app.use(
         resave: false,
         saveUninitialized: true,
         store: store,
-        cookie: { httpOnly: false, maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: "None" }
+        cookie: { maxAge: 1000 * 60 * 60 * 24 }
     })
 );
 // const allowedOrigins = ['https://tiend98.github.io', 'http://localhost:3000'];

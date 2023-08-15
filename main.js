@@ -55,8 +55,8 @@ function ensureAuthenticate(req, res, next) {
     console.log(req.session);
     console.log(req.session.authenticated);
     if (req.session.authenticated) {
-        return res.redirect('/');
-        return next();
+        return redirect('/signin')
+        // return next();
     } else {
         console.log(req.session.authenticated);
         res.status(403).json({ msg: "You're not authorized to view this page" })

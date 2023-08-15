@@ -55,6 +55,7 @@ function ensureAuthenticate(req, res, next) {
     console.log(req.session);
     console.log(req.session.authenticated);
     if (req.session.authenticated) {
+        return res.redirect('/');
         return next();
     } else {
         console.log(req.session.authenticated);

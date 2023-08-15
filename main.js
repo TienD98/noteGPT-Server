@@ -10,10 +10,19 @@ const welcomeRouter = require('./Routes/welcome');
 const session = require("express-session");
 const store = new session.MemoryStore();
 const cookieParser = require('cookie-parser');
+//locals
 const corsOptions = {
-    origin: "https://tiend98.github.io",
-    credentials: true
+    origin: ['https://tiend98.github.io', 'http://localhost:5173'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
 };
+
+//this is for https
+// const corsOptions = {
+//     origin: "https://tiend98.github.io",
+//     credentials: true
+// };
 
 app.use(cookieParser());
 app.use(cors(corsOptions));

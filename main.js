@@ -56,7 +56,6 @@ app.use('/register', registerRouter);
 app.use('/signin', signinRouter);
 
 function ensureAuthenticate(req, res, next) {
-    console.log(req.isAuthenticated());
     if (req.isAuthenticated()) {
         return next();
     } else {
@@ -90,12 +89,8 @@ passport.deserializeUser((id, done) => {
 app.get('/logout', (req, res, next) => {
     req.logout((err) => {
         if (err) {
-            console.log(req.session);
-            console.log(req.isAuthenticated());
             return next(err);
         }
-        console.log(req.session);
-        console.log(req.isAuthenticated());
         return res.status(200).send("logout success");
     })
 });

@@ -1,55 +1,31 @@
 const express = require('express');
 const signinRouter = express.Router();
-const bcrypt = require("bcryptjs");
-const pool = require('../DB/db');
+const passport = require('passport');
 
-//check if username exist
+// signinRouter.post('/', passport.authenticate("local",
+//     {
+//         successMessage: "signin success",
+//         failureMessage: "fail login"
+//     }), (req, res) => {
+//         return res.status(202).send("success login!");
+//     });
 signinRouter.use((req, res, next) => {
-    const username = req.body.username;
-    const password = req.body.password;
+    if (!req.body.username || !req.body.password) {
+        return res.status(400).send('bad credential request!');
+    } else {
+        next();
+    }
+})
 
-    pool.query('select username from users;', (error, result) => {
-        //error check for database connection
-        if (error) {
-            console.log(error);
-            return res.status(500).send("Error with database!");
-        }
-
-        let userFound = false;
-        // error check for if username is exist
-        for (const user of result.rows) {
-            // found user
-            if (user.username === username) {
-                userFound = true;
-                req.username = username;
-                req.password = password;
-                next();
-            }
-        }
-        if (!userFound) { return res.status(401).send("Username not found!") };
-    });
-});
-
-signinRouter.post('/', (req, res) => {
-
-    pool.query('select password from users where username = $1;', [req.username], (error, result) => {
-        if (error) {
-            return res.status(501).send('fail');
-        }
-
-        if (!bcrypt.compareSync(req.password, result.rows[0].password)) {
-            return res.status(401).send('fail');
-        }
-
-        req.session.authenticated = true;
-        req.session.user = {
-            username: req.username,
-            password: req.password,
-            hashedPassword: result.rows[0].password
-        }
-        console.log(req.session);
-        return res.status(202).send(req.session);
-    });
+signinRouter.post('/', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) { return res.status(400).send('error in authenticate') };
+        if (!user) { return res.status(401).send(info.msg) };
+        req.logIn(user, (err) => {
+            if (err) { return res.status(400).send(err) };
+            return res.status(200).send('success login!');
+        })
+    })(req, res, next);
 });
 
 module.exports = signinRouter

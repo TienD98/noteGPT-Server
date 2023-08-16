@@ -38,12 +38,12 @@ registerRouter.post('/', (req, res) => {
                 console.log(error);
                 return res.status(401).json("database register fail!");
             }
-            req.session.authenticated = true;
-            req.session.user = {
-                username: username,
-                password: password,
-                hashedPassword: hash
-            }
+            // req.session.authenticated = true;
+            // req.session.user = {
+            //     username: username,
+            //     password: password,
+            //     hashedPassword: hash
+            // }
             return res.status(200).json('Success register!');
         })
     });

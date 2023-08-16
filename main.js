@@ -53,7 +53,7 @@ function ensureAuthenticate(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     } else {
-        res.status(403).json({ msg: "You're not authorized to view this page" })
+        res.status(403).send("You're not authorized to view this page");
     }
 }
 
@@ -81,7 +81,10 @@ passport.deserializeUser((id, done) => {
 });
 
 app.get('/logout', (req, res) => {
-    req.logOut(() => { res.status(200).send("logout success"); });
+    req.logOut(() => {
+        console.log(res.isAuthenticated());
+        res.status(200).send("logout success");
+    });
 });
 
 app.use('/welcome', ensureAuthenticate, welcomeRouter);

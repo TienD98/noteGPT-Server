@@ -87,6 +87,7 @@ app.get('/logout', (req, res) => {
             return res.send(err);
         }
         console.log(req.isAuthenticated());
+        res.set('Cache-Control', 'no-store');
         return res.status(200).send("logout success");
     })
 });

@@ -82,7 +82,7 @@ passport.deserializeUser((id, done) => {
 });
 
 app.get('/logout', (req, res) => {
-    req.logout;
+    req.logOut;
     res.status(200).send("logout success");
 });
 

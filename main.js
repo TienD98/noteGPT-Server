@@ -49,11 +49,9 @@ app.use('/register', registerRouter);
 app.use('/signin', signinRouter);
 
 function ensureAuthenticate(req, res, next) {
-    console.log(req.session);
     if (req.isAuthenticated()) {
         return next();
     } else {
-        console.log(req.session.authenticated);
         res.status(403).json({ msg: "You're not authorized to view this page" })
     }
 }

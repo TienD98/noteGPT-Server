@@ -23,8 +23,6 @@ signinRouter.post('/', (req, res, next) => {
         if (!user) { return res.status(401).send(info.msg) };
         req.logIn(user, (err) => {
             if (err) { return res.status(400).send(err) };
-            console.log(req.session);
-            console.log(req.isAuthenticated());
             return res.status(200).send('success login!');
         })
     })(req, res, next);

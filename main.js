@@ -82,8 +82,7 @@ passport.deserializeUser((id, done) => {
 });
 
 app.get('/logout', (req, res) => {
-    req.logOut;
-    res.status(200).send("logout success");
+    req.logOut(() => { res.status(200).send("logout success"); });
 });
 
 app.use('/welcome', ensureAuthenticate, welcomeRouter);

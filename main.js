@@ -87,19 +87,25 @@ passport.deserializeUser((id, done) => {
     })
 });
 
-app.get('/logout', (req, res) => {
+app.get('/logout', (req, res, next) => {
     req.logout((err) => {
         if (err) {
+            console.log(req.session);
             console.log(req.isAuthenticated());
-            return res.send(err);
+            return next(err);
         }
+        console.log(req.session);
         console.log(req.isAuthenticated());
-        res.set('Cache-Control', 'no-store');
         return res.status(200).send("logout success");
     })
 });
 
 app.use('/welcome', ensureAuthenticate, welcomeRouter);
+
+app.use(function (err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {

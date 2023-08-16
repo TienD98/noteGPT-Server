@@ -80,12 +80,11 @@ passport.deserializeUser((id, done) => {
     })
 });
 
-app.get('/logout', (req, res) => {
-    console.log(req.isAuthenticated());
-    req.logOut(() => {
-        console.log(req.isAuthenticated());
+app.get('/signout', (req, res) => {
+    req.logout((err) => {
+        if (err) return res.send(err);
         return res.status(200).send("logout success");
-    });
+    })
 });
 
 app.use('/welcome', ensureAuthenticate, welcomeRouter);

@@ -84,7 +84,7 @@ app.get('/logout', (req, res) => {
     console.log(res.isAuthenticated());
     req.logOut(() => {
         console.log(res.isAuthenticated());
-        res.status(200).send("logout success");
+        return res.status(200).send("logout success");
     });
 });
 

@@ -2,13 +2,6 @@ const express = require('express');
 const signinRouter = express.Router();
 const passport = require('passport');
 
-// signinRouter.post('/', passport.authenticate("local",
-//     {
-//         successMessage: "signin success",
-//         failureMessage: "fail login"
-//     }), (req, res) => {
-//         return res.status(202).send("success login!");
-//     });
 signinRouter.use((req, res, next) => {
     if (!req.body.username || !req.body.password) {
         return res.status(400).send('bad credential request!');

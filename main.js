@@ -10,7 +10,12 @@ const welcomeRouter = require('./Routes/welcome');
 const session = require("express-session");
 const store = new session.MemoryStore();
 const cookieParser = require('cookie-parser');
-//locals
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const pool = require('./DB/db');
+const bcrypt = require("bcryptjs");
+
+//allow local and https crost origin
 const corsOptions = {
     origin: ['https://tiend98.github.io', 'http://localhost:5173'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -18,18 +23,11 @@ const corsOptions = {
     optionsSuccessStatus: 204,
 };
 
-//this is for https
-// const corsOptions = {
-//     origin: "https://tiend98.github.io",
-//     credentials: true
-// };
-
 app.use(cookieParser());
 app.use(cors(corsOptions));
 app.enable('trust proxy');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-
 app.use(
     session({
         secret: 'ASD123!@#',
@@ -44,23 +42,49 @@ app.use(
         }
     })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.get('/', (req, res) => {
-    res.send('Hello, Wolrd!');
-})
 app.use('/register', registerRouter);
 app.use('/signin', signinRouter);
 
 function ensureAuthenticate(req, res, next) {
     console.log(req.session);
-    console.log(req.session.authenticated);
-    if (req.session.authenticated) {
+    if (req.isAuthenticated()) {
         return next();
     } else {
         console.log(req.session.authenticated);
         res.status(403).json({ msg: "You're not authorized to view this page" })
     }
 }
+
+passport.use(
+    new LocalStrategy(function (username, password, done) {
+        pool.query('select * from users where username = $1;', [username], (err, res) => {
+            const user = res.rows[0];
+            if (err) return done(err, { msg: "bad request" });
+            if (!user) return done(null, false, { msg: "user not found" });
+            if (!bcrypt.compareSync(password, user.password)) return done(null, false, { msg: "password not correct" });
+            return done(null, user);
+        })
+    })
+);
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+    pool.query('select * from users where id = $1', [id], (err, res) => {
+        if (err) return done(err);
+        done(null, res.rows[0]);
+    })
+});
+
+app.get('/logout', (req, res) => {
+    req.logout;
+    res.status(200).send("logout success");
+});
 
 app.use('/welcome', ensureAuthenticate, welcomeRouter);
 

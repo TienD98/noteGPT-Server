@@ -82,7 +82,11 @@ passport.deserializeUser((id, done) => {
 
 app.get('/logout', (req, res) => {
     req.logout((err) => {
-        if (err) return res.send(err);
+        if (err) {
+            console.log(req.isAuthenticated());
+            return res.send(err);
+        }
+        console.log(req.isAuthenticated());
         return res.status(200).send("logout success");
     })
 });

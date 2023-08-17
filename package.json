@@ -8,11 +8,10 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "morgan": "^1.10.0",
-    "oauth2-server": "^3.1.1",
     "passport": "^0.6.0",
+    "passport-github2": "^0.1.12",
     "passport-local": "^1.0.0",
-    "pg": "^8.11.2",
-    "pg-promise": "^11.5.3"
+    "pg": "^8.11.2"
   },
   "scripts": {
     "start": "node main.js"

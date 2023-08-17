@@ -1,10 +1,7 @@
 const pool = require('../DB/db');
 const express = require('express');
 const registerRouter = express.Router();
-const cors = require('cors');
 const bcrypt = require("bcryptjs");
-
-registerRouter.use(cors());
 
 // regiter route for new user
 registerRouter.post('/', (req, res) => {

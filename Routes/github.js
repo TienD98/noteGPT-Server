@@ -4,9 +4,9 @@ const githubRouter = express.Router();
 
 githubRouter.get('/', (req, res) => {
     if (req.isAuthenticated()) {
-        res.send(200).json({ authenticate: true });
+        return res.send(200).json({ authenticate: true });
     }
-    res.status(402).json({ authenticate: false });
+    return res.status(401).send('not login');
 });
 
 githubRouter.get('/github', passport.authenticate("github", { scope: ["user"] }));

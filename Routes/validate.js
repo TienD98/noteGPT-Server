@@ -1,7 +1,7 @@
 const express = require('express');
 const validateRouter = express.Router();
 
-githubRouter.get('/', (req, res) => {
+validateRouter.get('/', (req, res) => {
     if (req.isAuthenticated()) {
         return res.send(200).json({ authenticate: true });
     }

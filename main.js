@@ -17,7 +17,7 @@ const bcrypt = require("bcryptjs");
 const logoutRouter = require('./Routes/logout');
 const githubRouter = require('./Routes/github');
 const GitHubStrategy = require("passport-github2").Strategy;
-
+const validateRouter = require('./Routes/validate');
 
 //allow local and https crost origin
 const corsOptions = {
@@ -99,7 +99,8 @@ app.use('/register', registerRouter);
 app.use('/signin', signinRouter);
 app.use('/welcome', ensureAuthenticate, welcomeRouter);
 app.use('/logout', logoutRouter);
-app.use('/auth', githubRouter);
+app.use('/auth/github', githubRouter);
+app.use('/validate', validateRouter);
 
 app.get('/logout', (req, res) => {
     console.log(req.session);

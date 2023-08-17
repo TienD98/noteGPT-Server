@@ -2,7 +2,14 @@ const express = require('express');
 const passport = require('passport');
 const githubRouter = express.Router();
 
-githubRouter.get('/', passport.authenticate("github", { scope: ["user"] }));
+githubRouter.get('/', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.send(200).json({ authenticate: true });
+    }
+    res.status(401).json({ authenticate: false });
+});
+
+githubRouter.get('/github', passport.authenticate("github", { scope: ["user"] }));
 
 // githubRouter.get('/callback', (req, res, next) => {
 //     passport.authenticate('github', (err, user, info) => {

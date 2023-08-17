@@ -28,7 +28,7 @@ githubRouter.get('/github', passport.authenticate("github", { scope: ["user"] })
 githubRouter.get('/callback',
     passport.authenticate('github',
         { failureRedirect: '/#/signin' }), (req, res) => {
-            res.redirect('http://localhost:5173/noteGPT/#/');
+            res.redirect('https://tiend98.github.io/noteGPT/#/');
         });
 
 module.exports = githubRouter;

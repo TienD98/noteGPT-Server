@@ -15,8 +15,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const pool = require('./DB/db');
 const bcrypt = require("bcryptjs");
 const logoutRouter = require('./Routes/logout');
-// const githubRouter = require('./Routes/github');
-// const GitHubStrategy = require("passport-github2").Strategy;
+const githubRouter = require('./Routes/github');
+const GitHubStrategy = require("passport-github2").Strategy;
 
 
 //allow local and https crost origin
@@ -39,16 +39,16 @@ passport.use(
     })
 );
 
-// passport.use(
-//     new GitHubStrategy({
-//         clientID: process.env.GITHUB_CLIENT_ID,
-//         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-//         callbackURL: "http://localhost:3000/auth/github/callback",
-//     },
-//         (accessToken, refreshToken, user, done) => {
-//             return done(null, user);
-//         })
-// )
+passport.use(
+    new GitHubStrategy({
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        callbackURL: "http://localhost:3000/auth/github/callback",
+    },
+        (accessToken, refreshToken, profile, done) => {
+            return done(null, profile);
+        })
+)
 
 passport.serializeUser((user, done) => {
     // done(null, user.id);
@@ -56,10 +56,14 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((user, done) => {
-    pool.query('select * from users where id = $1', [user.id], (err, res) => {
-        if (err) return done(err);
-        done(null, res.rows[0]);
-    })
+    if (user.origin === 'local') {
+        pool.query('select * from users where id = $1', [user.id], (err, res) => {
+            if (err) return done(err);
+            done(null, res.rows[0]);
+        })
+    } else {
+        done(null, user);
+    }
 });
 
 app.use(cookieParser());
@@ -95,7 +99,7 @@ app.use('/register', registerRouter);
 app.use('/signin', signinRouter);
 app.use('/welcome', ensureAuthenticate, welcomeRouter);
 app.use('/logout', logoutRouter);
-// app.use('/auth/github', githubRouter);
+app.use('/auth/github', githubRouter);
 
 app.get('/logout', (req, res) => {
     console.log(req.session);

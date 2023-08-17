@@ -6,7 +6,7 @@ githubRouter.get('/', (req, res) => {
     if (req.isAuthenticated()) {
         res.send(200).json({ authenticate: true });
     }
-    res.status(401).json({ authenticate: false });
+    res.status(402).json({ authenticate: false });
 });
 
 githubRouter.get('/github', passport.authenticate("github", { scope: ["user"] }));

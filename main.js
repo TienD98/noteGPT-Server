@@ -99,7 +99,7 @@ app.use('/register', registerRouter);
 app.use('/signin', signinRouter);
 app.use('/welcome', ensureAuthenticate, welcomeRouter);
 app.use('/logout', logoutRouter);
-app.use('/auth/github', githubRouter);
+app.use('/auth', githubRouter);
 
 app.get('/logout', (req, res) => {
     console.log(req.session);

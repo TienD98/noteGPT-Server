@@ -18,6 +18,6 @@ githubRouter.get('/', passport.authenticate("github", { scope: ["user"] }));
 //     })(req, res, next); // Make sure to call the function with req, res, and next
 // });
 
-githubRouter.get('/', passport.authenticate('github', { failureRedirect: '/#/signin', successRedirect: '/' }));
+githubRouter.get('/callback', passport.authenticate('github', { failureRedirect: '/#/signin', successRedirect: '/' }));
 
 module.exports = githubRouter;

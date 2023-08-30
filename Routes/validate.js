@@ -3,9 +3,9 @@ const validateRouter = express.Router();
 
 validateRouter.get('/', (req, res) => {
     if (req.isAuthenticated()) {
-        return res.status(200).json({ authenticate: true });
+        return res.status(201).json({ authenticate: true });
     }
-    return res.status(401).send('not login');
+    return res.status(201).json({ authenticate: false });
 });
 
 module.exports = validateRouter

@@ -9,7 +9,7 @@ githubRouter.get('/callback',
         { failureRedirect: 'https://tiend98.github.io/noteGPT/#/login' }), (req, res) => {
             console.log("GitHub callback route was hit");
 
-            res.redirect('https://tiend98.github.io/noteGPT/#/');
+            res.redirect('https://tiend98.github.io/noteGPT/#/main');
         });
 
 module.exports = githubRouter;

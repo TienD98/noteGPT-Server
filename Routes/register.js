@@ -4,7 +4,7 @@ const registerRouter = express.Router();
 const bcrypt = require("bcryptjs");
 
 // regiter route for new user
-registerRouter.post('/', (req, res) => {
+registerRouter.post('/', (req, res, next) => {
     //parse the info from user in client side
     const username = req.body.username;
     const password = req.body.password;
@@ -32,13 +32,31 @@ registerRouter.post('/', (req, res) => {
         //register user to database
         pool.query('insert into users (username, password) values ($1, $2);', [username, hash], (error, results) => {
             if (error) {
-                console.log(error);
                 return res.status(401).json("database register fail!");
             }
-            return res.status(200).json('Success register!');
+            next();
         })
     });
 });
+registerRouter.use((req, res) => {
+    const username = req.body.username;
 
+    pool.query('select id from users where username=$1;', [username], (error, results) => {
+        if (error) {
+            return res.status(500).send(error.message);
+        } else if (results.rows.length === 0) {
+            return res.status(404).send('user not found');
+        } else {
+            pool.query('INSERT INTO notes (users_id, title, note) values ($1, $2, $3);', [results.rows[0].id, 'Welcome', 'Here is where you can write notes'], (error, results) => {
+                if (error) {
+                    return res.status(500).send(error.message);
+                } else {
+                    console.log(results);
+                    return res.status(200).send('add note success');
+                }
+            });
+        }
+    })
+})
 
 module.exports = registerRouter;

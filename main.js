@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const signinRouter = require('./Routes/signin');
-const welcomeRouter = require('./Routes/welcome');
+const userNameRouter = require('./Routes/userName');
 const session = require("express-session");
 const store = new session.MemoryStore();
 const cookieParser = require('cookie-parser');
@@ -46,6 +46,7 @@ passport.use(
         callbackURL: "https://notegpt-686471fdfc45.herokuapp.com/auth/github/callback",
     },
         (accessToken, refreshToken, profile, done) => {
+            console.log(req.session);
             return done(null, profile);
         })
 )
@@ -97,7 +98,7 @@ app.use(passport.session());
 app.get('/', (req, res) => { res.status(200).send('hi') });
 app.use('/register', registerRouter);
 app.use('/signin', signinRouter);
-app.use('/welcome', ensureAuthenticate, welcomeRouter);
+app.use('/profile', ensureAuthenticate, userNameRouter);
 app.use('/logout', logoutRouter);
 app.use('/auth/github', githubRouter);
 app.use('/validate', validateRouter);
@@ -127,7 +128,7 @@ function ensureAuthenticate(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     } else {
-        res.status(403).send("You're not authorized to view this page");
+        res.status(403).send("You're not authorized to get this request!");
     }
 }
 

@@ -7,8 +7,6 @@ githubRouter.get('/', passport.authenticate("github", { scope: ["user"] }));
 githubRouter.get('/callback',
     passport.authenticate('github',
         { failureRedirect: 'https://tiend98.github.io/noteGPT/#/login' }), (req, res) => {
-            console.log("GitHub callback route was hit");
-
             res.redirect('https://tiend98.github.io/noteGPT/#/main');
         });
 

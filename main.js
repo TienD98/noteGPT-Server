@@ -46,7 +46,6 @@ passport.use(
         callbackURL: "https://notegpt-686471fdfc45.herokuapp.com/auth/github/callback",
     },
         (accessToken, refreshToken, profile, done) => {
-            console.log(req.session);
             return done(null, profile);
         })
 )

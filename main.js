@@ -71,6 +71,7 @@ app.use(cors(corsOptions));
 app.enable('trust proxy');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+//for local test comment out secure and samesite
 app.use(
     session({
         secret: 'ASD123!@#',
@@ -78,10 +79,10 @@ app.use(
         saveUninitialized: true,
         store,
         cookie: {
-            sameSite: "none",
+            // sameSite: "none",
             httpOnly: false,
             maxAge: 1000 * 60 * 60 * 24,
-            secure: true
+            // secure: true
         }
     })
 );

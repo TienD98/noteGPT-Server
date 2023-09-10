@@ -25,7 +25,7 @@ userNameRouter.get('/username', (req, res) => {
 
 userNameRouter.post('/addnote', (req, res) => {
     const title = req.body.title, note = req.body.note;
-    if (!title || !note || !userid) {
+    if (!title || !note || !req.id) {
         return res.status(400).send('error with user input!');
     }
     pool.query('INSERT INTO notes (users_id, title, note) VALUES ($1, $2, $3);', [req.id, title, note], (err, result) => {

@@ -79,10 +79,10 @@ app.use(
         saveUninitialized: true,
         store,
         cookie: {
-            // sameSite: "none",
+            sameSite: "none",
             httpOnly: false,
             maxAge: 1000 * 60 * 60 * 24,
-            // secure: true
+            secure: true
         }
     })
 );
@@ -121,7 +121,7 @@ app.get('/logout', (req, res) => {
 
 app.use(function (err, req, res, next) {
     console.error(err.stack);
-    res.status(500).send('Something broke!');
+    res.status(500).send('Something broke at middle ware .use');
 });
 
 function ensureAuthenticate(req, res, next) {

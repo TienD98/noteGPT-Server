@@ -28,11 +28,11 @@ userNameRouter.post('/addnote', (req, res) => {
     if (!title || !note || !req.id) {
         return res.status(400).send('error with user input!');
     }
-    pool.query('INSERT INTO notes (users_id, title, note) VALUES ($1, $2, $3);', [req.id, title, note], (err, result) => {
+    pool.query('INSERT INTO notes (users_id, title, note) VALUES ($1, $2, $3) RETURNING *;', [req.id, title, note], (err, result) => {
         if (err) {
             return res.status(500).send(errordatabase);
         } else {
-            return res.status(200).send('note added to db!');
+            return res.status(202).send(result.rows[0]);
         }
     })
 })

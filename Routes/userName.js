@@ -58,28 +58,27 @@ userNameRouter.delete('/delete/:id', (req, res) => {
 })
 
 userNameRouter.put('/update', (req, res, next) => {
-    const noteid = req.body.id, title = req.body.title, note = req.body.note;
-    if (!noteid || !title || !note) {
+    const noteid = req.body.id, note = req.body.note;
+    if (!noteid || !note) {
         res.status(400).send('bad user input');
     }
-    pool.query('select title, note from notes where id=$1;', [noteid], (err, result) => {
-        //
-        console.log(result.rows);
-        const databaseTitle = result.rows[0].title, databaseNote = result.rows[0].note;
+    pool.query('select note from notes where id=$1;', [noteid], (err, result) => {
+        const databaseNote = result.rows[0].note;
+        console.log(databaseNote);
         if (err) {
             return res.status(500).send(errordatabase);
-        } else if (databaseTitle === title && databaseNote === note) {
+        } else if (databaseNote === note) {
             return res.status(400).send('nothing changed compared to the stored data');
         } else {
             next();
         }
     })
 }, (req, res) => {
-    pool.query('UPDATE notes SET title=$1, note=$2 where id=$3;', [req.body.title, req.body.note, req.id], (err, result) => {
+    pool.query('UPDATE notes SET note=$1 where id=$2 RETURNING *;', [req.body.note, req.body.id], (err, result) => {
         if (err) {
             return res.status(500).send(errordatabase);
         } else {
-            return res.status(200).send('update note success');
+            return res.status(200).send(result.rows[0]);
         }
     })
 })

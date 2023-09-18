@@ -80,7 +80,7 @@ app.use(
         store,
         proxy: true,
         cookie: {
-            sameSite: 'lax',
+            sameSite: 'none',
             httpOnly: true,
             maxAge: 1000 * 60 * 24,
             secure: true

@@ -72,20 +72,20 @@ app.enable('trust proxy');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 //for local test comment out secure and samesite
-app.use(
-    session({
-        secret: 'ASD123!@#',
-        resave: false,
-        saveUninitialized: true,
-        store,
-        cookie: {
-            sameSite: "none",
-            httpOnly: true,
-            maxAge: 1000 * 60 * 60 * 24,
-            secure: true
-        }
-    })
-);
+// app.use(
+//     session({
+//         secret: 'ASD123!@#',
+//         resave: false,
+//         saveUninitialized: true,
+//         store,
+//         cookie: {
+//             sameSite: "none",
+//             httpOnly: true,
+//             maxAge: 1000 * 60 * 60 * 24,
+//             secure: true
+//         }
+//     })
+// );
 app.use((req, res, next) => {
     res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     res.set('Expires', '0');

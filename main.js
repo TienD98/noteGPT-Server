@@ -78,10 +78,11 @@ app.use(
         resave: false,
         saveUninitialized: true,
         store,
+        proxy: true,
         cookie: {
-            sameSite: "none",
-            httpOnly: false,
-            maxAge: 1000 * 60 * 60 * 24,
+            sameSite: 'lax',
+            httpOnly: true,
+            maxAge: 1000 * 60 * 24,
             secure: true
         }
     })

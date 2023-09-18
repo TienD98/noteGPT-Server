@@ -125,6 +125,7 @@ app.use(function (err, req, res, next) {
 });
 
 function ensureAuthenticate(req, res, next) {
+    console.log(req.isAuthenticated());
     if (req.isAuthenticated()) {
         return next();
     } else {

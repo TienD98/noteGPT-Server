@@ -78,12 +78,12 @@ app.use(
         resave: false,
         saveUninitialized: true,
         store,
-        // cookie: {
-        //     sameSite: "none",
-        //     httpOnly: false,
-        //     maxAge: 1000 * 60 * 60 * 24,
-        //     secure: true
-        // }
+        cookie: {
+            sameSite: "none",
+            httpOnly: false,
+            maxAge: 1000 * 60 * 60 * 24,
+            secure: true
+        }
     })
 );
 app.use((req, res, next) => {

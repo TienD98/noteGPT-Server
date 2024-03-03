@@ -4,9 +4,15 @@ const userNameRouter = express.Router();
 const errordatabase = 'error with database query';
 
 userNameRouter.use((req, res, next) => {
-    const userid = req.user.id;
-    req.id = userid;
-    next();
+    console.log("ensusre auth: " + req.isAuthenticated());
+    if (req.isAuthenticated()) {
+        const userid = req.user.id;
+        req.id = userid;
+        next();
+    } else {
+        res.status(403).send("You're not authorized to get this request!");
+    }
+
 });
 
 userNameRouter.get('/', (req, res) => {

@@ -1,6 +1,6 @@
 const express = require('express');
 const signinRouter = express.Router();
-const passport = require('passport');
+const passport = require('../Utils/passport-config');
 
 signinRouter.use((req, res, next) => {
     if (!req.body.username || !req.body.password) {

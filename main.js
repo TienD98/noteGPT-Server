@@ -18,16 +18,11 @@ const logoutRouter = require('./Routes/logout');
 const githubRouter = require('./Routes/github');
 const validateRouter = require('./Routes/validate');
 
-//allow local and https cross origin
-const corsOptions = {
-    origin: ['https://tiend98.github.io', 'http://localhost:5173'],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    optionsSuccessStatus: 204,
-};
-
 app.use(cookieParser(process.env.SECRET));
-app.use(cors(corsOptions));
+app.use(cors({
+    origin: 'https://tiend98.github.io',
+    credentials: true
+}));
 app.enable('trust proxy');
 app.use(morgan('dev'));
 app.use(bodyParser.json());

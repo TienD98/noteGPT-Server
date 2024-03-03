@@ -18,14 +18,15 @@ const logoutRouter = require('./Routes/logout');
 const githubRouter = require('./Routes/github');
 const validateRouter = require('./Routes/validate');
 
-app.use(cookieParser(process.env.SECRET));
-app.use(cors({
-    origin: 'https://tiend98.github.io',
-    credentials: true,
+const corsOptions = {
+    origin: ['https://tiend98.github.io', 'http://localhost:5173'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: ['Content-Type']
+    credentials: true,
+    optionsSuccessStatus: 204,
+};
 
-}));
+app.use(cookieParser(process.env.SECRET));
+app.use(cors(corsOptions));
 app.enable('trust proxy');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -48,12 +49,12 @@ app.use(
     })
 );
 
-// app.use((req, res, next) => {
-//     res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-//     res.set('Expires', '0');
-//     res.set('Pragma', 'no-cache');
-//     next();
-// });
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+    res.set('Expires', '0');
+    res.set('Pragma', 'no-cache');
+    next();
+});
 
 app.use(passport.initialize());
 app.use(passport.session());

@@ -7,7 +7,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const store = new session.MemoryStore();
 const passport = require('passport');
-const pool = require("./DB/db");
 const app = express();
 
 //Router imports
@@ -17,6 +16,8 @@ const registerRouter = require('./Routes/register');
 const logoutRouter = require('./Routes/logout');
 const githubRouter = require('./Routes/github');
 const validateRouter = require('./Routes/validate');
+const authorize = require('./Utils/authorize');
+const chatRouter = require('./Routes/chat');
 
 const corsOptions = {
     origin: ['https://tiend98.github.io', 'http://localhost:5173'],
@@ -39,10 +40,10 @@ app.use(
         store,
         proxy: true,
         cookie: {
-            sameSite: 'none',
+            // sameSite: 'none',
             httpOnly: true,
             maxAge: 1000 * 60 * 24,
-            secure: true
+            // secure: true
         }
     })
 );
@@ -56,5 +57,6 @@ app.use('/profile', userNameRouter);
 app.use('/logout', logoutRouter);
 app.use('/auth/github', githubRouter);
 app.use('/validate', validateRouter);
-
+app.use('/chat', chatRouter);
+// app.use('/chat', authorize);
 module.exports = app;
